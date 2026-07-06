@@ -2202,6 +2202,11 @@ class ScsDataClient implements LoggerAwareInterface
                         }
                         $results[] = $value;
                     }
+
+                    $status = $call->getStatus();
+                    if ($status->code !== 0) {
+                        return new GetBatchError(_ErrorConverter::convert($status, $call->getMetadata()));
+                    }
                     return new GetBatchSuccess($results);
                 } catch (SdkError $e) {
                     return new GetBatchError($e);
@@ -2257,8 +2262,8 @@ class ScsDataClient implements LoggerAwareInterface
                     }
 
                     $status = $call->getStatus();
-                    if ($status->code != 0) {
-                        return new SetBatchError(new UnknownError($status->details));
+                    if ($status->code !== 0) {
+                        return new SetBatchError(_ErrorConverter::convert($status, $call->getMetadata()));
                     }
                     return new SetBatchSuccess($results);
                 } catch (SdkError $e) {
