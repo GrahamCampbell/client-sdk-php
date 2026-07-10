@@ -9,7 +9,6 @@ use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\TransferStats;
 use LogicException;
 use Psr\Http\Message\RequestInterface;
 use Throwable;
@@ -48,9 +47,6 @@ class FakeGrpcHandler
     {
         $this->responders[] = static function (RequestInterface $request, array $options) use ($response, $trailers): PromiseInterface {
             $response->getBody()->rewind();
-            if (isset($options["on_stats"])) {
-                ($options["on_stats"])(new TransferStats($request, $response, 0.01, null, []));
-            }
             if (isset($options["on_trailers"])) {
                 ($options["on_trailers"])($trailers, $response, $request);
             }
@@ -63,16 +59,11 @@ class FakeGrpcHandler
      * Enqueue a failed transfer.
      *
      * @param callable $reasonFactory fn(RequestInterface): Throwable
-     * @param mixed $handlerErrorData errno for the on_stats capture, or null
      * @return void
      */
-    public function fail(callable $reasonFactory, $handlerErrorData = null): void
+    public function fail(callable $reasonFactory): void
     {
-        $this->responders[] = static function (RequestInterface $request, array $options) use ($reasonFactory, $handlerErrorData): PromiseInterface {
-            if (isset($options["on_stats"])) {
-                ($options["on_stats"])(new TransferStats($request, null, 0.01, $handlerErrorData, []));
-            }
-
+        $this->responders[] = static function (RequestInterface $request, array $options) use ($reasonFactory): PromiseInterface {
             return new RejectedPromise($reasonFactory($request));
         };
     }

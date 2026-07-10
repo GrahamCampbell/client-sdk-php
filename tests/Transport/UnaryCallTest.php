@@ -8,9 +8,7 @@ use Cache_client\ECacheResult;
 use Cache_client\ScsClient;
 use Cache_client\_GetRequest;
 use Cache_client\_GetResponse;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\NetworkTimeoutException;
 use GuzzleHttp\Multiplexing;
 use GuzzleHttp\Promise\CancellationException;
 use GuzzleHttp\Psr7\Response;
@@ -124,7 +122,6 @@ class UnaryCallTest extends TestCase
         $this->assertFalse($options["decode_content"]);
         $this->assertTrue($options["verify"]);
         $this->assertIsCallable($options["on_trailers"]);
-        $this->assertIsCallable($options["on_stats"]);
         $this->assertArrayNotHasKey("sink", $options);
     }
 
@@ -375,23 +372,14 @@ class UnaryCallTest extends TestCase
 
     public function testDeadlineExpiryMapsToDeadlineExceeded()
     {
-        if (ClientInterface::MAJOR_VERSION === 7) {
-            $this->handler->fail(static function (RequestInterface $request) {
-                return new ConnectException(
-                    "cURL error 28: Operation timed out after 5000 milliseconds",
-                    $request,
-                    null,
-                    ["errno" => 28]
-                );
-            });
-        } else {
-            $this->handler->fail(static function (RequestInterface $request) {
-                return new NetworkTimeoutException(
-                    "cURL error 28: Operation timed out after 5000 milliseconds",
-                    $request
-                );
-            }, 28);
-        }
+        $this->handler->fail(static function (RequestInterface $request) {
+            return new ConnectException(
+                "cURL error 28: Operation timed out after 5000 milliseconds",
+                $request,
+                null,
+                ["errno" => 28]
+            );
+        });
 
         [$response, $status] = $this->stub()->Get(new _GetRequest(), [], ["timeout" => 5000000])->wait();
         $this->assertNull($response);

@@ -11,7 +11,6 @@ use GuzzleHttp\Promise\Is;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\TransferStats;
 use GuzzleHttp\TransportSharing;
 use InvalidArgumentException;
 use RuntimeException;
@@ -184,15 +183,9 @@ class Channel
         }
         $this->pendingPromises = [];
 
-        try {
-            // Guzzle 8's close() rethrows captured teardown failures; the
-            // handler reference must be dropped either way.
-            if ($this->handler instanceof CurlMultiHandler && method_exists($this->handler, 'close')) {
-                $this->handler->close();
-            }
-        } finally {
-            $this->handler = null;
-        }
+        // Guzzle 7's CurlMultiHandler has no teardown API; dropping the
+        // reference releases the multi handle.
+        $this->handler = null;
     }
 
     /**
@@ -312,9 +305,6 @@ class Channel
             'connect_timeout' => $this->connectTimeoutSecs,
             'on_trailers' => static function (array $trailers) use ($state): void {
                 $state->trailers = $trailers;
-            },
-            'on_stats' => static function (TransferStats $stats) use ($state): void {
-                $state->stats = $stats;
             },
         ];
 
