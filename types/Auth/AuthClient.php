@@ -1,16 +1,23 @@
 <?php
 // GENERATED CODE -- DO NOT EDIT!
+// Momento fork note: base class re-pointed at the in-repo
+// Momento\Transport\BaseStub (ext-grpc removed).
 
 namespace Auth;
 
+use Momento\Transport\BaseStub;
+use Momento\Transport\Channel;
+use Momento\Transport\ServerStreamingCall;
+use Momento\Transport\UnaryCall;
+
 /**
  */
-class AuthClient extends \Grpc\BaseStub {
+class AuthClient extends BaseStub {
 
     /**
      * @param string $hostname hostname
      * @param array $opts channel options
-     * @param \Grpc\Channel $channel (optional) re-use channel object
+     * @param Channel $channel (optional) re-use channel object
      */
     public function __construct($hostname, $opts, $channel = null) {
         parent::__construct($hostname, $opts, $channel);
@@ -20,7 +27,7 @@ class AuthClient extends \Grpc\BaseStub {
      * @param \Auth\_LoginRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\ServerStreamingCall
+     * @return ServerStreamingCall
      */
     public function Login(\Auth\_LoginRequest $argument,
       $metadata = [], $options = []) {
@@ -35,7 +42,7 @@ class AuthClient extends \Grpc\BaseStub {
      * @param \Auth\_GenerateApiTokenRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function GenerateApiToken(\Auth\_GenerateApiTokenRequest $argument,
       $metadata = [], $options = []) {
@@ -50,7 +57,7 @@ class AuthClient extends \Grpc\BaseStub {
      * @param \Auth\_RefreshApiTokenRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function RefreshApiToken(\Auth\_RefreshApiTokenRequest $argument,
       $metadata = [], $options = []) {

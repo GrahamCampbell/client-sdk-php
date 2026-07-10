@@ -1,3 +1,2 @@
-FROM mcr.microsoft.com/devcontainers/php:8.1-bookworm
-
-RUN pecl install grpc protobuf && docker-php-ext-enable grpc protobuf
+# The Guzzle gRPC transport needs libcurl >= 8.14.0 (Debian trixie or newer).
+FROM mcr.microsoft.com/devcontainers/php:8.4

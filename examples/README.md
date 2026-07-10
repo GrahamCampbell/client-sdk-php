@@ -9,9 +9,8 @@
 
 You will need:
 
-- At least PHP 8.0
-- The gRPC PHP extension. See the [gRPC docs](https://github.com/grpc/grpc/blob/master/src/php/README.md) section on installing the extension.
-- The protobuf C extension. See the [protobuf C extension docs](https://developers.google.com/google-ads/api/docs/client-libs/php/protobuf#c_implementation) for installation instructions.
+- At least PHP 8.1
+- The PHP cURL extension (`ext-curl`), built against libcurl 8.14.0 or newer with SSL and HTTP/2 support.
 - [Composer](https://getcomposer.org/doc/00-intro.md)
 
 Run `composer update` to install the prerequisites.

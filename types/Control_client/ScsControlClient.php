@@ -1,16 +1,22 @@
 <?php
 // GENERATED CODE -- DO NOT EDIT!
+// Momento fork note: base class re-pointed at the in-repo
+// Momento\Transport\BaseStub (ext-grpc removed).
 
 namespace Control_client;
 
+use Momento\Transport\BaseStub;
+use Momento\Transport\Channel;
+use Momento\Transport\UnaryCall;
+
 /**
  */
-class ScsControlClient extends \Grpc\BaseStub {
+class ScsControlClient extends BaseStub {
 
     /**
      * @param string $hostname hostname
      * @param array $opts channel options
-     * @param \Grpc\Channel $channel (optional) re-use channel object
+     * @param Channel $channel (optional) re-use channel object
      */
     public function __construct($hostname, $opts, $channel = null) {
         parent::__construct($hostname, $opts, $channel);
@@ -20,7 +26,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_CreateCacheRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function CreateCache(\Control_client\_CreateCacheRequest $argument,
       $metadata = [], $options = []) {
@@ -34,7 +40,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_DeleteCacheRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DeleteCache(\Control_client\_DeleteCacheRequest $argument,
       $metadata = [], $options = []) {
@@ -48,7 +54,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_ListCachesRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListCaches(\Control_client\_ListCachesRequest $argument,
       $metadata = [], $options = []) {
@@ -62,7 +68,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_FlushCacheRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function FlushCache(\Control_client\_FlushCacheRequest $argument,
       $metadata = [], $options = []) {
@@ -76,7 +82,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_CreateSigningKeyRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function CreateSigningKey(\Control_client\_CreateSigningKeyRequest $argument,
       $metadata = [], $options = []) {
@@ -90,7 +96,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_RevokeSigningKeyRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function RevokeSigningKey(\Control_client\_RevokeSigningKeyRequest $argument,
       $metadata = [], $options = []) {
@@ -104,7 +110,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_ListSigningKeysRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListSigningKeys(\Control_client\_ListSigningKeysRequest $argument,
       $metadata = [], $options = []) {
@@ -118,7 +124,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_CreateIndexRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function CreateIndex(\Control_client\_CreateIndexRequest $argument,
       $metadata = [], $options = []) {
@@ -132,7 +138,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_DeleteIndexRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DeleteIndex(\Control_client\_DeleteIndexRequest $argument,
       $metadata = [], $options = []) {
@@ -146,7 +152,7 @@ class ScsControlClient extends \Grpc\BaseStub {
      * @param \Control_client\_ListIndexesRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListIndexes(\Control_client\_ListIndexesRequest $argument,
       $metadata = [], $options = []) {

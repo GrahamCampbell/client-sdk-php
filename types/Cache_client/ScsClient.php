@@ -1,16 +1,23 @@
 <?php
 // GENERATED CODE -- DO NOT EDIT!
+// Momento fork note: base class re-pointed at the in-repo
+// Momento\Transport\BaseStub (ext-grpc removed).
 
 namespace Cache_client;
 
+use Momento\Transport\BaseStub;
+use Momento\Transport\Channel;
+use Momento\Transport\ServerStreamingCall;
+use Momento\Transport\UnaryCall;
+
 /**
  */
-class ScsClient extends \Grpc\BaseStub {
+class ScsClient extends BaseStub {
 
     /**
      * @param string $hostname hostname
      * @param array $opts channel options
-     * @param \Grpc\Channel $channel (optional) re-use channel object
+     * @param Channel $channel (optional) re-use channel object
      */
     public function __construct($hostname, $opts, $channel = null) {
         parent::__construct($hostname, $opts, $channel);
@@ -20,7 +27,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_GetRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function Get(\Cache_client\_GetRequest $argument,
       $metadata = [], $options = []) {
@@ -34,7 +41,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_GetWithHashRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function GetWithHash(\Cache_client\_GetWithHashRequest $argument,
       $metadata = [], $options = []) {
@@ -48,7 +55,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_GetBatchRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\ServerStreamingCall
+     * @return ServerStreamingCall
      */
     public function GetBatch(\Cache_client\_GetBatchRequest $argument,
       $metadata = [], $options = []) {
@@ -62,7 +69,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function Set(\Cache_client\_SetRequest $argument,
       $metadata = [], $options = []) {
@@ -76,7 +83,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetBatchRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\ServerStreamingCall
+     * @return ServerStreamingCall
      */
     public function SetBatch(\Cache_client\_SetBatchRequest $argument,
       $metadata = [], $options = []) {
@@ -90,7 +97,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetIfRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetIf(\Cache_client\_SetIfRequest $argument,
       $metadata = [], $options = []) {
@@ -107,7 +114,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetIfHashRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetIfHash(\Cache_client\_SetIfHashRequest $argument,
       $metadata = [], $options = []) {
@@ -122,7 +129,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetIfNotExistsRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetIfNotExists(\Cache_client\_SetIfNotExistsRequest $argument,
       $metadata = [], $options = []) {
@@ -136,7 +143,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_DeleteRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function Delete(\Cache_client\_DeleteRequest $argument,
       $metadata = [], $options = []) {
@@ -150,7 +157,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_KeysExistRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function KeysExist(\Cache_client\_KeysExistRequest $argument,
       $metadata = [], $options = []) {
@@ -164,7 +171,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_IncrementRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function Increment(\Cache_client\_IncrementRequest $argument,
       $metadata = [], $options = []) {
@@ -178,7 +185,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_UpdateTtlRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function UpdateTtl(\Cache_client\_UpdateTtlRequest $argument,
       $metadata = [], $options = []) {
@@ -192,7 +199,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ItemGetTtlRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ItemGetTtl(\Cache_client\_ItemGetTtlRequest $argument,
       $metadata = [], $options = []) {
@@ -206,7 +213,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ItemGetTypeRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ItemGetType(\Cache_client\_ItemGetTypeRequest $argument,
       $metadata = [], $options = []) {
@@ -220,7 +227,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_DictionaryGetRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DictionaryGet(\Cache_client\_DictionaryGetRequest $argument,
       $metadata = [], $options = []) {
@@ -234,7 +241,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_DictionaryFetchRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DictionaryFetch(\Cache_client\_DictionaryFetchRequest $argument,
       $metadata = [], $options = []) {
@@ -248,7 +255,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_DictionarySetRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DictionarySet(\Cache_client\_DictionarySetRequest $argument,
       $metadata = [], $options = []) {
@@ -262,7 +269,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_DictionaryIncrementRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DictionaryIncrement(\Cache_client\_DictionaryIncrementRequest $argument,
       $metadata = [], $options = []) {
@@ -276,7 +283,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_DictionaryDeleteRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DictionaryDelete(\Cache_client\_DictionaryDeleteRequest $argument,
       $metadata = [], $options = []) {
@@ -290,7 +297,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_DictionaryLengthRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DictionaryLength(\Cache_client\_DictionaryLengthRequest $argument,
       $metadata = [], $options = []) {
@@ -304,7 +311,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetFetchRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetFetch(\Cache_client\_SetFetchRequest $argument,
       $metadata = [], $options = []) {
@@ -318,7 +325,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetSampleRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetSample(\Cache_client\_SetSampleRequest $argument,
       $metadata = [], $options = []) {
@@ -332,7 +339,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetUnionRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetUnion(\Cache_client\_SetUnionRequest $argument,
       $metadata = [], $options = []) {
@@ -346,7 +353,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetDifferenceRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetDifference(\Cache_client\_SetDifferenceRequest $argument,
       $metadata = [], $options = []) {
@@ -360,7 +367,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetContainsRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetContains(\Cache_client\_SetContainsRequest $argument,
       $metadata = [], $options = []) {
@@ -374,7 +381,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetLengthRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetLength(\Cache_client\_SetLengthRequest $argument,
       $metadata = [], $options = []) {
@@ -388,7 +395,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SetPopRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetPop(\Cache_client\_SetPopRequest $argument,
       $metadata = [], $options = []) {
@@ -402,7 +409,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListPushFrontRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListPushFront(\Cache_client\_ListPushFrontRequest $argument,
       $metadata = [], $options = []) {
@@ -416,7 +423,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListPushBackRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListPushBack(\Cache_client\_ListPushBackRequest $argument,
       $metadata = [], $options = []) {
@@ -430,7 +437,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListPopFrontRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListPopFront(\Cache_client\_ListPopFrontRequest $argument,
       $metadata = [], $options = []) {
@@ -444,7 +451,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListPopBackRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListPopBack(\Cache_client\_ListPopBackRequest $argument,
       $metadata = [], $options = []) {
@@ -458,7 +465,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListEraseRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListErase(\Cache_client\_ListEraseRequest $argument,
       $metadata = [], $options = []) {
@@ -472,7 +479,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListRemoveRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListRemove(\Cache_client\_ListRemoveRequest $argument,
       $metadata = [], $options = []) {
@@ -486,7 +493,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListFetchRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListFetch(\Cache_client\_ListFetchRequest $argument,
       $metadata = [], $options = []) {
@@ -500,7 +507,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListLengthRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListLength(\Cache_client\_ListLengthRequest $argument,
       $metadata = [], $options = []) {
@@ -514,7 +521,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListConcatenateFrontRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListConcatenateFront(\Cache_client\_ListConcatenateFrontRequest $argument,
       $metadata = [], $options = []) {
@@ -528,7 +535,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListConcatenateBackRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListConcatenateBack(\Cache_client\_ListConcatenateBackRequest $argument,
       $metadata = [], $options = []) {
@@ -542,7 +549,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_ListRetainRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListRetain(\Cache_client\_ListRetainRequest $argument,
       $metadata = [], $options = []) {
@@ -565,7 +572,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SortedSetPutRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SortedSetPut(\Cache_client\_SortedSetPutRequest $argument,
       $metadata = [], $options = []) {
@@ -580,7 +587,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SortedSetFetchRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SortedSetFetch(\Cache_client\_SortedSetFetchRequest $argument,
       $metadata = [], $options = []) {
@@ -596,7 +603,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SortedSetGetScoreRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SortedSetGetScore(\Cache_client\_SortedSetGetScoreRequest $argument,
       $metadata = [], $options = []) {
@@ -611,7 +618,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SortedSetRemoveRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SortedSetRemove(\Cache_client\_SortedSetRemoveRequest $argument,
       $metadata = [], $options = []) {
@@ -632,7 +639,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SortedSetIncrementRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SortedSetIncrement(\Cache_client\_SortedSetIncrementRequest $argument,
       $metadata = [], $options = []) {
@@ -647,7 +654,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SortedSetGetRankRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SortedSetGetRank(\Cache_client\_SortedSetGetRankRequest $argument,
       $metadata = [], $options = []) {
@@ -662,7 +669,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SortedSetLengthRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SortedSetLength(\Cache_client\_SortedSetLengthRequest $argument,
       $metadata = [], $options = []) {
@@ -677,7 +684,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SortedSetLengthByScoreRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SortedSetLengthByScore(\Cache_client\_SortedSetLengthByScoreRequest $argument,
       $metadata = [], $options = []) {
@@ -698,7 +705,7 @@ class ScsClient extends \Grpc\BaseStub {
      * @param \Cache_client\_SortedSetUnionStoreRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SortedSetUnionStore(\Cache_client\_SortedSetUnionStoreRequest $argument,
       $metadata = [], $options = []) {

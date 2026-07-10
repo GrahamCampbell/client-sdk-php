@@ -1,16 +1,22 @@
 <?php
 // GENERATED CODE -- DO NOT EDIT!
+// Momento fork note: base class re-pointed at the in-repo
+// Momento\Transport\BaseStub (ext-grpc removed).
 
 namespace Cache_client;
 
+use Momento\Transport\BaseStub;
+use Momento\Transport\Channel;
+use Momento\Transport\UnaryCall;
+
 /**
  */
-class HttpCacheClient extends \Grpc\BaseStub {
+class HttpCacheClient extends BaseStub {
 
     /**
      * @param string $hostname hostname
      * @param array $opts channel options
-     * @param \Grpc\Channel $channel (optional) re-use channel object
+     * @param Channel $channel (optional) re-use channel object
      */
     public function __construct($hostname, $opts, $channel = null) {
         parent::__construct($hostname, $opts, $channel);
@@ -20,7 +26,7 @@ class HttpCacheClient extends \Grpc\BaseStub {
      * @param \Cache_client\_HttpGetRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function Get(\Cache_client\_HttpGetRequest $argument,
       $metadata = [], $options = []) {
@@ -34,7 +40,7 @@ class HttpCacheClient extends \Grpc\BaseStub {
      * @param \Cache_client\_HttpSetRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function Set(\Cache_client\_HttpSetRequest $argument,
       $metadata = [], $options = []) {
@@ -48,7 +54,7 @@ class HttpCacheClient extends \Grpc\BaseStub {
      * @param \Cache_client\_HttpSetRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function SetButItsAPut(\Cache_client\_HttpSetRequest $argument,
       $metadata = [], $options = []) {

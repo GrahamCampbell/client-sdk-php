@@ -1,7 +1,14 @@
 <?php
 // GENERATED CODE -- DO NOT EDIT!
+// Momento fork note: base class re-pointed at the in-repo
+// Momento\Transport\BaseStub (ext-grpc removed).
 
 namespace Cache_client\Pubsub;
+
+use Momento\Transport\BaseStub;
+use Momento\Transport\Channel;
+use Momento\Transport\ServerStreamingCall;
+use Momento\Transport\UnaryCall;
 
 /**
  * For working with topics in a cache.
@@ -17,12 +24,12 @@ namespace Cache_client\Pubsub;
  *   subscription stream. If you do not care about occasional discontinuities then
  *   don't bother handling them! You might still want to log them just in case ;-)
  */
-class PubsubClient extends \Grpc\BaseStub {
+class PubsubClient extends BaseStub {
 
     /**
      * @param string $hostname hostname
      * @param array $opts channel options
-     * @param \Grpc\Channel $channel (optional) re-use channel object
+     * @param Channel $channel (optional) re-use channel object
      */
     public function __construct($hostname, $opts, $channel = null) {
         parent::__construct($hostname, $opts, $channel);
@@ -44,7 +51,7 @@ class PubsubClient extends \Grpc\BaseStub {
      * @param \Cache_client\Pubsub\_PublishRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function Publish(\Cache_client\Pubsub\_PublishRequest $argument,
       $metadata = [], $options = []) {
@@ -64,7 +71,7 @@ class PubsubClient extends \Grpc\BaseStub {
      * @param \Cache_client\Pubsub\_SubscriptionRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\ServerStreamingCall
+     * @return ServerStreamingCall
      */
     public function Subscribe(\Cache_client\Pubsub\_SubscriptionRequest $argument,
       $metadata = [], $options = []) {

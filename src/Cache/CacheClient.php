@@ -58,7 +58,6 @@ use Momento\Cache\CacheOperationTypes\SortedSetRemoveElementResponse;
 use Momento\Cache\CacheOperationTypes\SortedSetRemoveElementsResponse;
 use Momento\Cache\CacheOperationTypes\SortedSetUnionStoreResponse;
 use Momento\Cache\CacheOperationTypes\UpdateTtlResponse;
-use Momento\Cache\Errors\InvalidArgumentError;
 use Momento\Cache\Internal\IdleDataClientWrapper;
 use Momento\Cache\Internal\ScsControlClient;
 use Momento\Cache\Internal\ScsDataClient;
@@ -109,11 +108,9 @@ class CacheClient implements LoggerAwareInterface
         };
         $this->dataClients = [];
 
+        // Each data client owns an independent transport channel, so the
+        // ext-grpc ForceNewChannel option and its guard are gone.
         $numGrpcChannels = $configuration->getTransportStrategy()->getGrpcConfig()->getNumGrpcChannels();
-        $forceNewChannels = $configuration->getTransportStrategy()->getGrpcConfig()->getForceNewChannel();
-        if (($numGrpcChannels > 1) && (! $forceNewChannels)) {
-            throw new InvalidArgumentError("When setting NumGrpcChannels > 1, you must also set ForceNewChannel to true, or else the gRPC library will re-use the same channel.");
-        }
         for ($i = 0; $i < $numGrpcChannels; $i++) {
             array_push($this->dataClients, new IdleDataClientWrapper($dataClientFactory, $this->configuration));
         }

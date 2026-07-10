@@ -1,7 +1,13 @@
 <?php
 // GENERATED CODE -- DO NOT EDIT!
+// Momento fork note: base class re-pointed at the in-repo
+// Momento\Transport\BaseStub (ext-grpc removed).
 
 namespace Webhook;
+
+use Momento\Transport\BaseStub;
+use Momento\Transport\Channel;
+use Momento\Transport\UnaryCall;
 
 /**
  * A Webhook is a mechanism to consume messages on a Topic.
@@ -10,12 +16,12 @@ namespace Webhook;
  * Secondarily, webhooks open us up to a whole lot of integrations
  * (slack, discord, event bridge, etc).
  */
-class WebhookClient extends \Grpc\BaseStub {
+class WebhookClient extends BaseStub {
 
     /**
      * @param string $hostname hostname
      * @param array $opts channel options
-     * @param \Grpc\Channel $channel (optional) re-use channel object
+     * @param Channel $channel (optional) re-use channel object
      */
     public function __construct($hostname, $opts, $channel = null) {
         parent::__construct($hostname, $opts, $channel);
@@ -25,7 +31,7 @@ class WebhookClient extends \Grpc\BaseStub {
      * @param \Webhook\_PutWebhookRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function PutWebhook(\Webhook\_PutWebhookRequest $argument,
       $metadata = [], $options = []) {
@@ -39,7 +45,7 @@ class WebhookClient extends \Grpc\BaseStub {
      * @param \Webhook\_DeleteWebhookRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DeleteWebhook(\Webhook\_DeleteWebhookRequest $argument,
       $metadata = [], $options = []) {
@@ -53,7 +59,7 @@ class WebhookClient extends \Grpc\BaseStub {
      * @param \Webhook\_ListWebhookRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function ListWebhooks(\Webhook\_ListWebhookRequest $argument,
       $metadata = [], $options = []) {
@@ -67,7 +73,7 @@ class WebhookClient extends \Grpc\BaseStub {
      * @param \Webhook\_GetWebhookSecretRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function GetWebhookSecret(\Webhook\_GetWebhookSecretRequest $argument,
       $metadata = [], $options = []) {
@@ -81,7 +87,7 @@ class WebhookClient extends \Grpc\BaseStub {
      * @param \Webhook\_RotateWebhookSecretRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function RotateWebhookSecret(\Webhook\_RotateWebhookSecretRequest $argument,
       $metadata = [], $options = []) {
