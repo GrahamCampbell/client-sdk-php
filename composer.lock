@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ffc52a299309cd588bfe3d6bec899fe5",
+    "content-hash": "4363aacc7d42ca26c1e9661d4eb4de5d",
     "packages": [
         {
             "name": "google/protobuf",
@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "8562484e6f0ed05c6a3517934243cc6a606403d9"
+                "reference": "02c156f3bc8022dd9c9c1568acf28ed3d2a5a648"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8562484e6f0ed05c6a3517934243cc6a606403d9",
-                "reference": "8562484e6f0ed05c6a3517934243cc6a606403d9",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/02c156f3bc8022dd9c9c1568acf28ed3d2a5a648",
+                "reference": "02c156f3bc8022dd9c9c1568acf28ed3d2a5a648",
                 "shasum": ""
             },
             "require": {
@@ -173,7 +173,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-05T20:15:05+00:00"
+            "time": "2026-07-06T18:41:20+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -264,12 +264,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "44444b5cacdcba4117acc9b671f3059ff1bf7766"
+                "reference": "9ceef3580508bea4a919c5ca870d30f25da3883a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/44444b5cacdcba4117acc9b671f3059ff1bf7766",
-                "reference": "44444b5cacdcba4117acc9b671f3059ff1bf7766",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/9ceef3580508bea4a919c5ca870d30f25da3883a",
+                "reference": "9ceef3580508bea4a919c5ca870d30f25da3883a",
                 "shasum": ""
             },
             "require": {
@@ -374,7 +374,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-23T15:24:41+00:00"
+            "time": "2026-07-06T18:47:11+00:00"
         },
         {
             "name": "psr/http-client",
@@ -1843,25 +1843,25 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.34",
+            "version": "9.6.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b36f02317466907a230d3aa1d34467041271ef4a"
+                "reference": "0edba2f3a0c48df3553cb9b640810b30df60302b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b36f02317466907a230d3aa1d34467041271ef4a",
-                "reference": "b36f02317466907a230d3aa1d34467041271ef4a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0edba2f3a0c48df3553cb9b640810b30df60302b",
+                "reference": "0edba2f3a0c48df3553cb9b640810b30df60302b",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.5.0 || ^2",
                 "ext-dom": "*",
+                "ext-filter": "*",
                 "ext-json": "*",
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
-                "ext-xml": "*",
                 "ext-xmlwriter": "*",
                 "myclabs/deep-copy": "^1.13.4",
                 "phar-io/manifest": "^2.0.4",
@@ -1926,31 +1926,15 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.34"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.35"
             },
             "funding": [
                 {
-                    "url": "https://phpunit.de/sponsors.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/sebastianbergmann",
-                    "type": "github"
-                },
-                {
-                    "url": "https://liberapay.com/sebastianbergmann",
-                    "type": "liberapay"
-                },
-                {
-                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
-                    "type": "thanks_dev"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/phpunit/phpunit",
-                    "type": "tidelift"
+                    "url": "https://phpunit.de/sponsoring.html",
+                    "type": "other"
                 }
             ],
-            "time": "2026-01-27T05:45:00+00:00"
+            "time": "2026-07-06T14:48:07+00:00"
         },
         {
             "name": "psr/container",

@@ -7,9 +7,8 @@ use GuzzleHttp\TransferStats;
 
 /**
  * Mutable per-call slot the Channel's record-only Guzzle callbacks write
- * into and the call object later reads. Record-only by design: the
- * on_trailers/on_stats relative order differs between Guzzle 7.14 and 8.0,
- * so nothing may depend on it.
+ * into and the call object later reads. Record-only by design: nothing may
+ * depend on the relative order of the on_trailers/on_stats callbacks.
  *
  * @internal
  */
@@ -24,8 +23,8 @@ class CallState
     public ?array $trailers = null;
 
     /**
-     * The TransferStats delivered by on_stats; on Guzzle 8.0 its
-     * getHandlerErrorData() is the only structured errno source.
+     * The TransferStats delivered by on_stats; its getHandlerErrorData()
+     * is the only structured errno source.
      *
      * @var TransferStats|null
      */

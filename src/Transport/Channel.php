@@ -187,7 +187,7 @@ class Channel
         try {
             // Guzzle 8's close() rethrows captured teardown failures; the
             // handler reference must be dropped either way.
-            if ($this->handler instanceof CurlMultiHandler && method_exists($this->handler, 'close')) {
+            if ($this->handler instanceof CurlMultiHandler) {
                 $this->handler->close();
             }
         } finally {

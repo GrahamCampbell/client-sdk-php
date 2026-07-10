@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Momento\Transport;
 
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ConnectTimeoutException;
 use GuzzleHttp\Exception\HandlerClosedException;
@@ -18,18 +17,11 @@ use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
 /**
- * Maps a rejected Guzzle transfer to a gRPC Status, branching on the
- * installed Guzzle line (7.14 vs 8.0 exception taxonomies and errno access).
+ * Maps a rejected Guzzle transfer to a gRPC Status.
  */
 class ErrorMapper
 {
-    private const ERRNO_TIMEOUT = 28; // CURLE_OPERATION_TIMEDOUT
-
     private const ERRNOS_H2 = [16, 92]; // CURLE_HTTP2, CURLE_HTTP2_STREAM
-
-    private const ERRNOS_NETWORK = [5, 6, 7, 35, 52];
-
-    private const ERRNOS_MID_TRANSFER = [18, 55, 56];
 
     /**
      * Convert a promise rejection reason into the call's terminal Status.
@@ -54,77 +46,6 @@ class ErrorMapper
             }
         }
 
-        if (ClientInterface::MAJOR_VERSION >= 8) {
-            return self::mapGuzzle8($reason, $hadDeadline, $state);
-        }
-
-        return self::mapGuzzle7($reason, $hadDeadline, $state);
-    }
-
-    /**
-     * The PSR-7 response attached to a failure exception, when one exists.
-     *
-     * @param Throwable $reason the rejection reason
-     * @return ResponseInterface|null
-     */
-    public static function responseFrom(Throwable $reason): ?ResponseInterface
-    {
-        if (ClientInterface::MAJOR_VERSION >= 8) {
-            return $reason instanceof ResponseException
-                ? $reason->getResponse()
-                : null;
-        }
-
-        return $reason instanceof RequestException ? $reason->getResponse() : null;
-    }
-
-    /**
-     * @param Throwable $reason the rejection reason
-     * @param bool $hadDeadline whether a finite deadline governed
-     * @param CallState $state per-call capture slot (timer values)
-     * @return Status
-     * @throws Throwable when not mappable
-     */
-    private static function mapGuzzle7(Throwable $reason, bool $hadDeadline, CallState $state): Status
-    {
-        if ($reason instanceof ConnectException) {
-            $errno = $reason->getHandlerContext()['errno'] ?? null;
-            if ($errno === self::ERRNO_TIMEOUT && $hadDeadline) {
-                if (!self::isConnectPhaseTimeout($reason->getMessage()) || self::deadlineTimerWasBinding($state)) {
-                    return new Status(StatusCode::DEADLINE_EXCEEDED, $reason->getMessage());
-                }
-
-                return new Status(StatusCode::UNAVAILABLE, $reason->getMessage());
-            }
-
-            return new Status(StatusCode::UNAVAILABLE, $reason->getMessage());
-        }
-
-        if ($reason instanceof RequestException) {
-            $errno = $reason->getHandlerContext()['errno'] ?? null;
-            if (in_array($errno, self::ERRNOS_H2, true)) {
-                return self::statusFromH2Reset($reason->getMessage())
-                    ?? new Status(StatusCode::INTERNAL, $reason->getMessage());
-            }
-            if (in_array($errno, self::ERRNOS_MID_TRANSFER, true) || in_array($errno, self::ERRNOS_NETWORK, true)) {
-                return new Status(StatusCode::UNAVAILABLE, $reason->getMessage());
-            }
-
-            return new Status(StatusCode::UNKNOWN, $reason->getMessage());
-        }
-
-        throw $reason;
-    }
-
-    /**
-     * @param Throwable $reason the rejection reason
-     * @param bool $hadDeadline whether a finite deadline governed
-     * @param CallState $state per-call capture slot
-     * @return Status
-     * @throws Throwable when not mappable
-     */
-    private static function mapGuzzle8(Throwable $reason, bool $hadDeadline, CallState $state): Status
-    {
         if ($reason instanceof ConnectTimeoutException) {
             return ($hadDeadline && self::deadlineTimerWasBinding($state))
                 ? new Status(StatusCode::DEADLINE_EXCEEDED, $reason->getMessage())
@@ -167,6 +88,19 @@ class ErrorMapper
     }
 
     /**
+     * The PSR-7 response attached to a failure exception, when one exists.
+     *
+     * @param Throwable $reason the rejection reason
+     * @return ResponseInterface|null
+     */
+    public static function responseFrom(Throwable $reason): ?ResponseInterface
+    {
+        return $reason instanceof ResponseException
+            ? $reason->getResponse()
+            : null;
+    }
+
+    /**
      * @param CallState $state per-call capture slot
      * @return int|null
      */
@@ -205,37 +139,6 @@ class ErrorMapper
             default:
                 return null;
         }
-    }
-
-    /**
-     * The connect-phase wordings libcurl uses for CURLE_OPERATION_TIMEDOUT,
-     * mirroring Guzzle 8's CURL_CONNECT_TIMEOUT_ERRORS (matched
-     * case-insensitively); this is the sole connect-vs-operation
-     * disambiguator on the Guzzle 7 path.
-     */
-    private const CONNECT_TIMEOUT_MESSAGES = [
-        'Connection timed out',
-        'Connection timeout',
-        'Connection time-out',
-        'Resolving timed out',
-        'name lookup timed out',
-        'Proxy CONNECT aborted due to timeout',
-        'SSL connection timeout',
-    ];
-
-    /**
-     * @param string $message the exception message
-     * @return bool
-     */
-    private static function isConnectPhaseTimeout(string $message): bool
-    {
-        foreach (self::CONNECT_TIMEOUT_MESSAGES as $needle) {
-            if (stripos($message, $needle) !== false) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

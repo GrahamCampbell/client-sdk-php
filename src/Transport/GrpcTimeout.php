@@ -50,8 +50,8 @@ class GrpcTimeout
     /**
      * Convert a microseconds deadline to the Guzzle 'timeout' option: float
      * seconds, rounded UP to a whole millisecond and then offset by half a
-     * millisecond so both lines' float-to-milliseconds truncation lands on
-     * the exact millisecond.
+     * millisecond so Guzzle's float-to-milliseconds truncation lands on the
+     * exact millisecond.
      *
      * @param int $micros deadline in microseconds
      * @return float seconds
@@ -62,7 +62,7 @@ class GrpcTimeout
     }
 
     /**
-     * The EFFECTIVE whole-millisecond deadline both lines hand to
+     * The EFFECTIVE whole-millisecond deadline Guzzle hands to
      * CURLOPT_TIMEOUT_MS for this deadline; toGuzzleSeconds() is exactly
      * this value plus the half-millisecond truncation offset.
      *
