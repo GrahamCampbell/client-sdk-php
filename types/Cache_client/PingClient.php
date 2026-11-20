@@ -3,14 +3,18 @@
 
 namespace Cache_client;
 
+use Momento\Transport\BaseStub;
+use Momento\Transport\Channel;
+use Momento\Transport\UnaryCall;
+
 /**
  */
-class PingClient extends \Grpc\BaseStub {
+class PingClient extends BaseStub {
 
     /**
      * @param string $hostname hostname
      * @param array $opts channel options
-     * @param \Grpc\Channel $channel (optional) re-use channel object
+     * @param Channel $channel (optional) re-use channel object
      */
     public function __construct($hostname, $opts, $channel = null) {
         parent::__construct($hostname, $opts, $channel);
@@ -20,7 +24,7 @@ class PingClient extends \Grpc\BaseStub {
      * @param \Cache_client\_PingRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function Ping(\Cache_client\_PingRequest $argument,
       $metadata = [], $options = []) {

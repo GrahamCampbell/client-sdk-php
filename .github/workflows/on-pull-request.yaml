@@ -10,8 +10,8 @@ jobs:
   lint:
     runs-on: ubuntu-24.04
     env:
-      php-version: 8.0
-      extensions: grpc, protobuf
+      php-version: 8.1
+      extensions: curl
 
     steps:
       - uses: actions/checkout@v4
@@ -69,14 +69,14 @@ jobs:
       max-parallel: 1
       fail-fast: true
       matrix:
-        php-version: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
+        php-version: ['8.1', '8.2', '8.3', '8.4']
     runs-on: ubuntu-24.04
 
     env:
       V1_API_KEY: ${{ secrets.ALPHA_TEST_AUTH_TOKEN }}
       MOMENTO_API_KEY: ${{ secrets.ALPHA_API_KEY_V2 }}
       MOMENTO_ENDPOINT: "cell-alpha-dev.preprod.a.momentohq.com"
-      extensions: grpc, protobuf
+      extensions: curl
 
     steps:
       - uses: actions/checkout@v4

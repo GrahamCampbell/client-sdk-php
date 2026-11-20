@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Momento\Cache\Interceptors;
 
-use Grpc\Interceptor;
-
-class AgentInterceptor extends Interceptor
+class AgentInterceptor
 {
     private bool $isFirstRequest = true;
     private string $agent;
@@ -19,13 +17,17 @@ class AgentInterceptor extends Interceptor
         $this->runtimeVersion = PHP_VERSION;
     }
 
-    public function interceptUnaryUnary($method, $argument, $deserialize, $continuation, array $metadata = [], array $options = [])
+    /**
+     * Add the agent metadata to the first call only.
+     */
+    public function apply(array $metadata): array
     {
         if ($this->isFirstRequest) {
             $metadata["agent"] = [$this->agent];
             $metadata["runtime-version"] = [$this->runtimeVersion];
             $this->isFirstRequest = false;
         }
-        return parent::interceptUnaryUnary($method, $argument, $deserialize, $continuation, $metadata, $options);
+
+        return $metadata;
     }
 }

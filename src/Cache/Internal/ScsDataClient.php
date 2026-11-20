@@ -53,7 +53,6 @@ use Common\NotEqual;
 use Common\Present;
 use Common\PresentAndNotEqual;
 use Exception;
-use Grpc\UnaryCall;
 use Momento\Auth\ICredentialProvider;
 use Momento\Cache\CacheOperationTypes\DecreaseTtlError;
 use Momento\Cache\CacheOperationTypes\DecreaseTtlMiss;
@@ -235,6 +234,7 @@ use Momento\Cache\Errors\UnknownError;
 use Momento\Config\IConfiguration;
 use Momento\Requests\CollectionTtl;
 use Momento\Requests\SortedSetUnionStoreAggregateFunction;
+use Momento\Transport\UnaryCall;
 use Momento\Utilities\_ErrorConverter;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
@@ -272,7 +272,11 @@ class ScsDataClient implements LoggerAwareInterface
     private LoggerInterface $logger;
     private $timeout;
 
-    public function __construct(IConfiguration $configuration, ICredentialProvider $authProvider, $defaultTtlSeconds)
+    /**
+     * @param array $channelOptions @internal extra options forwarded to the
+     *                              transport Channel (test injection seam)
+     */
+    public function __construct(IConfiguration $configuration, ICredentialProvider $authProvider, $defaultTtlSeconds, array $channelOptions = [])
     {
         validateTtl($defaultTtlSeconds);
         $this->defaultTtlSeconds = $defaultTtlSeconds;
@@ -283,7 +287,7 @@ class ScsDataClient implements LoggerAwareInterface
         validateOperationTimeout($operationTimeoutMs);
         $this->deadline_milliseconds = $operationTimeoutMs ?? self::$DEFAULT_DEADLINE_MILLISECONDS;
         $this->timeout = $this->deadline_milliseconds * self::$TIMEOUT_MULTIPLIER;
-        $this->grpcManager = new DataGrpcManager($authProvider, $configuration);
+        $this->grpcManager = new DataGrpcManager($authProvider, $configuration, $channelOptions);
         $this->setLogger($configuration->getLoggerFactory()->getLogger(get_class($this)));
     }
 

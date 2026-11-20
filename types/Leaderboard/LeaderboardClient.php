@@ -3,6 +3,10 @@
 
 namespace Leaderboard;
 
+use Momento\Transport\BaseStub;
+use Momento\Transport\Channel;
+use Momento\Transport\UnaryCall;
+
 /**
  * Like a sorted set, but for leaderboards!
  *
@@ -17,12 +21,12 @@ namespace Leaderboard;
  * implications you should be aware of, but the one most likely to affect you is that
  * below -16777216 and above 16777216, not all integers are able to be represented.
  */
-class LeaderboardClient extends \Grpc\BaseStub {
+class LeaderboardClient extends BaseStub {
 
     /**
      * @param string $hostname hostname
      * @param array $opts channel options
-     * @param \Grpc\Channel $channel (optional) re-use channel object
+     * @param Channel $channel (optional) re-use channel object
      */
     public function __construct($hostname, $opts, $channel = null) {
         parent::__construct($hostname, $opts, $channel);
@@ -33,7 +37,7 @@ class LeaderboardClient extends \Grpc\BaseStub {
      * @param \Leaderboard\_DeleteLeaderboardRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function DeleteLeaderboard(\Leaderboard\_DeleteLeaderboardRequest $argument,
       $metadata = [], $options = []) {
@@ -49,7 +53,7 @@ class LeaderboardClient extends \Grpc\BaseStub {
      * @param \Leaderboard\_UpsertElementsRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function UpsertElements(\Leaderboard\_UpsertElementsRequest $argument,
       $metadata = [], $options = []) {
@@ -64,7 +68,7 @@ class LeaderboardClient extends \Grpc\BaseStub {
      * @param \Leaderboard\_RemoveElementsRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function RemoveElements(\Leaderboard\_RemoveElementsRequest $argument,
       $metadata = [], $options = []) {
@@ -79,7 +83,7 @@ class LeaderboardClient extends \Grpc\BaseStub {
      * @param \Leaderboard\_GetLeaderboardLengthRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function GetLeaderboardLength(\Leaderboard\_GetLeaderboardLengthRequest $argument,
       $metadata = [], $options = []) {
@@ -97,7 +101,7 @@ class LeaderboardClient extends \Grpc\BaseStub {
      * @param \Leaderboard\_GetByRankRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function GetByRank(\Leaderboard\_GetByRankRequest $argument,
       $metadata = [], $options = []) {
@@ -113,7 +117,7 @@ class LeaderboardClient extends \Grpc\BaseStub {
      * @param \Leaderboard\_GetRankRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function GetRank(\Leaderboard\_GetRankRequest $argument,
       $metadata = [], $options = []) {
@@ -132,7 +136,7 @@ class LeaderboardClient extends \Grpc\BaseStub {
      * @param \Leaderboard\_GetByScoreRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function GetByScore(\Leaderboard\_GetByScoreRequest $argument,
       $metadata = [], $options = []) {
@@ -149,7 +153,7 @@ class LeaderboardClient extends \Grpc\BaseStub {
      * @param \Leaderboard\_GetCompetitionRankRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
-     * @return \Grpc\UnaryCall
+     * @return UnaryCall
      */
     public function GetCompetitionRank(\Leaderboard\_GetCompetitionRankRequest $argument,
       $metadata = [], $options = []) {

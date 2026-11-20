@@ -10,9 +10,8 @@ is under development and may be subject to backward-incompatible changes.
 
 - A Momento API key is required, you can generate one using the [Momento console](https://console.gomomento.com).
 - A Momento service endpoint is required. You can find a [list of them here](https://docs.momentohq.com/platform/regions).
-- At least PHP 8.0
-- The grpc PHP extension. See the [gRPC docs](https://github.com/grpc/grpc/blob/master/src/php/README.md) section on installing the extension.
-- The protobuf C extension. See the [protobuf C extension docs](https://developers.google.com/google-ads/api/docs/client-libs/php/protobuf#c_implementation) for installation instructions.
+- At least PHP 8.1
+- The PHP cURL extension (`ext-curl`), built against libcurl 8.14.0 or newer with SSL and HTTP/2 support.
 
 **IDE Notes**: You'll most likely want to use an IDE that supports PHP development, such
 as [PhpStorm](https://www.jetbrains.com/phpstorm/) or [Microsoft Visual Studio Code](https://code.visualstudio.com/).
