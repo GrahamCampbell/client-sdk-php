@@ -4,12 +4,10 @@ declare(strict_types=1);
 namespace Momento\Cache\Internal;
 
 use Control_client\ScsControlClient;
-use Grpc\Channel;
-use Grpc\ChannelCredentials;
-use Grpc\Interceptor;
 use Momento\Auth\ICredentialProvider;
 use Momento\Cache\Interceptors\AgentInterceptor;
-use Momento\Cache\Interceptors\AuthorizationInterceptor;
+use Momento\Transport\Channel;
+use Momento\Transport\TransportRequirements;
 
 
 class ControlGrpcManager
@@ -18,25 +16,34 @@ class ControlGrpcManager
     public ScsControlClient $client;
     private Channel $channel;
 
-    public function __construct(ICredentialProvider $authProvider)
+    /**
+     * @param ICredentialProvider $authProvider
+     * @param array $channelOptions @internal extra options forwarded to the
+     *                              transport Channel (test injection seam)
+     */
+    public function __construct(ICredentialProvider $authProvider, array $channelOptions = [])
     {
-        $endpoint = $authProvider->getControlEndpoint();
-        $channelArgs = [
-            "credentials" => ChannelCredentials::createSsl(),
-            "grpc.service_config_disable_resolution" => 1, // Disable service config resolution to avoid TXT record lookup
-        ];
+        TransportRequirements::assertSupported();
 
+        $endpoint = $authProvider->getControlEndpoint();
         if ($authProvider->getTrustedControlEndpointCertificateName()) {
-            $channelArgs["grpc.ssl_target_name_override"] = $authProvider->getTrustedControlEndpointCertificateName();
+            $channelOptions["ssl_target_name_override"] = $authProvider->getTrustedControlEndpointCertificateName();
         }
-        $this->channel = new Channel($endpoint, $channelArgs);
-        $interceptors = [
-            new AuthorizationInterceptor($authProvider->getAuthToken()),
-            new AgentInterceptor("cache"),
-        ];
-        $interceptedChannel = Interceptor::intercept($this->channel, $interceptors);
-        $options = [];
-        $this->client = new ScsControlClient($endpoint, $options, $interceptedChannel);
+        $this->channel = new Channel($endpoint, $channelOptions);
+
+        $authToken = $authProvider->getAuthToken();
+        $agentInterceptor = new AgentInterceptor("cache");
+        $updateMetadata = function (array $metadata, string $method, bool $isServerStreaming) use ($authToken, $agentInterceptor): array {
+            $metadata["authorization"] = [$authToken];
+            if (!$isServerStreaming) {
+                $metadata = $agentInterceptor->apply($metadata);
+            }
+
+            return $metadata;
+        };
+
+        $options = ["update_metadata" => $updateMetadata];
+        $this->client = new ScsControlClient($endpoint, $options, $this->channel);
     }
 
     public function close(): void {

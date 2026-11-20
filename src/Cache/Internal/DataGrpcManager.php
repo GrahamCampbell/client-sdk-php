@@ -4,60 +4,52 @@ declare(strict_types=1);
 namespace Momento\Cache\Internal;
 
 use Cache_client\ScsClient;
-use Grpc\Channel;
-use Grpc\ChannelCredentials;
-use Grpc\Interceptor;
 use Momento\Auth\ICredentialProvider;
 use Momento\Cache\Interceptors\AgentInterceptor;
-use Momento\Cache\Interceptors\AuthorizationInterceptor;
-use Momento\Cache\Interceptors\ReadConcernInterceptor;
 use Momento\Config\IConfiguration;
+use Momento\Config\ReadConcern;
+use Momento\Transport\Channel;
+use Momento\Transport\TransportRequirements;
 
 class DataGrpcManager
 {
     public ScsClient $client;
     private Channel $channel;
 
-    public function __construct(ICredentialProvider $authProvider, IConfiguration $configuration)
+    /**
+     * @param ICredentialProvider $authProvider
+     * @param IConfiguration $configuration
+     * @param array $channelOptions @internal extra options forwarded to the
+     *                              transport Channel (test injection seam)
+     */
+    public function __construct(ICredentialProvider $authProvider, IConfiguration $configuration, array $channelOptions = [])
     {
+        TransportRequirements::assertSupported();
+
         $endpoint = $authProvider->getCacheEndpoint();
-        $channelArgs = [
-            "credentials" => ChannelCredentials::createSsl(),
-            "grpc.service_config_disable_resolution" => 1, // Disable service config resolution to avoid TXT record lookup
-        ];
-
         if ($authProvider->getTrustedCacheEndpointCertificateName()) {
-            $channelArgs["grpc.ssl_target_name_override"] = $authProvider->getTrustedCacheEndpointCertificateName();
+            $channelOptions["ssl_target_name_override"] = $authProvider->getTrustedCacheEndpointCertificateName();
         }
-        $forceNewChannel = $configuration
-            ->getTransportStrategy()
-            ->getGrpcConfig()
-            ->getForceNewChannel();
-        if ($forceNewChannel) {
-            $channelArgs["force_new"] = $forceNewChannel;
-        }
-        if ($configuration->getTransportStrategy()->getGrpcConfig()->getKeepAlivePermitWithoutCalls()) {
-            $channelArgs["grpc.keepalive_permit_without_calls"] =
-                $configuration->getTransportStrategy()->getGrpcConfig()->getKeepAlivePermitWithoutCalls();
-        }
-        if ($configuration->getTransportStrategy()->getGrpcConfig()->getKeepAliveTimeoutMS()) {
-            $channelArgs["grpc.keepalive_timeout_ms"] =
-                $configuration->getTransportStrategy()->getGrpcConfig()->getKeepAliveTimeoutMS();
-        }
-        if ($configuration->getTransportStrategy()->getGrpcConfig()->getKeepAliveTimeMS()) {
-            $channelArgs["grpc.keepalive_time_ms"] =
-                $configuration->getTransportStrategy()->getGrpcConfig()->getKeepAliveTimeMS();
-        }
-        $this->channel = new Channel($endpoint, $channelArgs);
-        $interceptors = [
-            new AuthorizationInterceptor($authProvider->getAuthToken()),
-            new AgentInterceptor("cache"),
-            new ReadConcernInterceptor($configuration->getReadConcern()),
-        ];
-        $interceptedChannel = Interceptor::intercept($this->channel, $interceptors);
+        $this->channel = new Channel($endpoint, $channelOptions);
 
-        $options = [];
-        $this->client = new ScsClient($endpoint, $options, $interceptedChannel);
+        $authToken = $authProvider->getAuthToken();
+        $readConcern = $configuration->getReadConcern();
+        $agentInterceptor = new AgentInterceptor("cache");
+        $updateMetadata = function (array $metadata, string $method, bool $isServerStreaming) use ($authToken, $readConcern, $agentInterceptor): array {
+            $metadata["authorization"] = [$authToken];
+            if (!$isServerStreaming) {
+                // The ext-grpc interceptors only acted on unary calls.
+                $metadata = $agentInterceptor->apply($metadata);
+                if ($readConcern !== ReadConcern::BALANCED) {
+                    $metadata["read-concern"] = [$readConcern];
+                }
+            }
+
+            return $metadata;
+        };
+
+        $options = ["update_metadata" => $updateMetadata];
+        $this->client = new ScsClient($endpoint, $options, $this->channel);
     }
 
     public function close(): void {

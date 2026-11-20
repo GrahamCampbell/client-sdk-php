@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Momento\Utilities;
 
-use Grpc;
 use Momento\Cache\Errors\AlreadyExistsError;
 use Momento\Cache\Errors\AuthenticationError;
 use Momento\Cache\Errors\BadRequestError;
@@ -21,27 +20,28 @@ use Momento\Cache\Errors\ServerUnavailableError;
 use Momento\Cache\Errors\TimeoutError;
 use Momento\Cache\Errors\UnknownError;
 use Momento\Cache\Errors\UnknownServiceError;
+use Momento\Transport\StatusCode;
 
 class _ErrorConverter
 {
 
     public static array $rpcToError = [
-        Grpc\STATUS_INVALID_ARGUMENT => InvalidArgumentError::class,
-        Grpc\STATUS_OUT_OF_RANGE => BadRequestError::class,
-        Grpc\STATUS_UNIMPLEMENTED => BadRequestError::class,
-        Grpc\STATUS_FAILED_PRECONDITION => FailedPreconditionError::class,
-        Grpc\STATUS_CANCELLED => CancelledError::class,
-        Grpc\STATUS_DEADLINE_EXCEEDED => TimeoutError::class,
-        Grpc\STATUS_PERMISSION_DENIED => PermissionError::class,
-        Grpc\STATUS_UNAUTHENTICATED => AuthenticationError::class,
-        Grpc\STATUS_RESOURCE_EXHAUSTED => LimitExceededError::class,
-        Grpc\STATUS_ALREADY_EXISTS => AlreadyExistsError::class,
-        Grpc\STATUS_NOT_FOUND => NotFoundError::class,
-        Grpc\STATUS_UNKNOWN => UnknownServiceError::class,
-        Grpc\STATUS_ABORTED => InternalServerError::class,
-        Grpc\STATUS_INTERNAL => InternalServerError::class,
-        Grpc\STATUS_UNAVAILABLE => ServerUnavailableError::class,
-        Grpc\STATUS_DATA_LOSS => InternalServerError::class
+        StatusCode::INVALID_ARGUMENT => InvalidArgumentError::class,
+        StatusCode::OUT_OF_RANGE => BadRequestError::class,
+        StatusCode::UNIMPLEMENTED => BadRequestError::class,
+        StatusCode::FAILED_PRECONDITION => FailedPreconditionError::class,
+        StatusCode::CANCELLED => CancelledError::class,
+        StatusCode::DEADLINE_EXCEEDED => TimeoutError::class,
+        StatusCode::PERMISSION_DENIED => PermissionError::class,
+        StatusCode::UNAUTHENTICATED => AuthenticationError::class,
+        StatusCode::RESOURCE_EXHAUSTED => LimitExceededError::class,
+        StatusCode::ALREADY_EXISTS => AlreadyExistsError::class,
+        StatusCode::NOT_FOUND => NotFoundError::class,
+        StatusCode::UNKNOWN => UnknownServiceError::class,
+        StatusCode::ABORTED => InternalServerError::class,
+        StatusCode::INTERNAL => InternalServerError::class,
+        StatusCode::UNAVAILABLE => ServerUnavailableError::class,
+        StatusCode::DATA_LOSS => InternalServerError::class
     ];
 
     public static function convert($grpcStatus, ?array $metadata = null): SdkError
@@ -51,7 +51,7 @@ class _ErrorConverter
         if (array_key_exists($status, self::$rpcToError)) {
             // If the status code is STATUS_NOT_FOUND, we need to check the details to determine if it was a
             // cache or item that was not found.
-            if ($status === Grpc\STATUS_NOT_FOUND) {
+            if ($status === StatusCode::NOT_FOUND) {
                 if (!array_key_exists("err", $grpcStatus->metadata)) {
                     $class = CacheNotFoundError::class;
                 } elseif ($grpcStatus->metadata["err"][0] == "item_not_found") {
